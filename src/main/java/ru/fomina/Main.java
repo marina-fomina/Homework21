@@ -33,7 +33,7 @@ public class Main {
 
             employeeDAO.addEmployee(employee);
 
-            employeeDAO.getById(2);
+            System.out.println(employeeDAO.getById(2));
 
             List<Employee> list = new ArrayList<>(employeeDAO.getAllEmployees());
             for(Employee empl : list){
