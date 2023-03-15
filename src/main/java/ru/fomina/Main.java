@@ -3,17 +3,22 @@ package ru.fomina;
 import ru.fomina.DAO.EmployeeDAO;
 import ru.fomina.DAO.EmployeeDAOImpl;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class Main {
-    public static void main(String[] args) throws SQLException {
-        final String user = "postgres";
-        final String password = "vfhbyf310394";
-        final String url = "jdbc:postgresql://localhost:5432/skypro";
+    public static void main(String[] args) throws SQLException, IOException {
+        Properties properties = new Properties();
+        properties.load(new FileInputStream(Paths.get("db.properties").toFile()));
 
-        try (Connection connection = DriverManager.getConnection(url, user, password)) {
+        try (Connection connection = DriverManager.getConnection(properties.getProperty("url"),
+                properties.getProperty("user"), properties.getProperty("password"))) {
             PreparedStatement statement = connection.prepareStatement(
                     "SELECT * FROM employee INNER JOIN city ON employee.city_id = city.city_id WHERE id=1");
             ResultSet resultSet = statement.executeQuery();
