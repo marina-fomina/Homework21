@@ -12,7 +12,7 @@ public interface EmployeeDAO {
 
     List<Employee> getAllEmployees ();
 
-    void updateEmployeeById (int id, String first_name, String last_name, String gender, int age, int city_id);
+    void updateEmployeeById (int id, String first_name, String last_name, String gender, int age, int city);
 
-    void deleteById (int id);
+    void deleteEmployee (Employee employee);
 }
