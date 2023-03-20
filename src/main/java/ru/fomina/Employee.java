@@ -1,13 +1,25 @@
 package ru.fomina;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "employee")
 public class Employee {
-    private int id;
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, updatable = false)
+    private Integer id;
+    @Column(name = "first_name", nullable = false, length = 50)
     private String first_name;
+    @Column(name = "last_name", nullable = false, length = 50)
     private String last_name;
+    @Column(name = "gender", nullable = false, length = 6)
     private String gender;
+    @Column(name = "age", nullable = false)
     private int age;
+    @JoinColumn(name = "city_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private City city;
 
     public Employee() {
@@ -83,7 +95,7 @@ public class Employee {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return id == employee.id;
+        return Objects.equals(id, employee.id);
     }
 
     @Override
