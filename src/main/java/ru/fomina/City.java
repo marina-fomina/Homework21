@@ -1,10 +1,25 @@
 package ru.fomina;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name = "city")
 public class City {
-    private int city_id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "city_id", updatable = false)
+    private Integer city_id;
+    @Column(name = "city_name", nullable = false, length = 50)
     private String city_name;
+
+    @OneToMany(mappedBy = "city", cascade = CascadeType.ALL, orphanRemoval = false)
+    private List<Employee> employees = new ArrayList<>();
+
+    public City() {
+    }
 
     public City(int city_id, String city_name) {
         this.city_id = city_id;
@@ -32,7 +47,7 @@ public class City {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         City city = (City) o;
-        return city_id == city.city_id;
+        return Objects.equals(city_id, city.city_id);
     }
 
     @Override
